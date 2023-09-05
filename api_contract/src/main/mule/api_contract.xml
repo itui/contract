@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d50cc90c-b64e-4130-9071-1723a211ba6e" basePath="/contract">
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<sub-flow name="Common" doc:id="9be1e22a-4071-43b1-9ca4-44e9409b9a75" >
+		<set-variable value="#[attributes.headers.Authorization]" doc:name="GetToken" doc:id="c8af9670-77ad-4182-bc19-c28dee5784b1" variableName="token" />
+		<set-variable value="#[p('anypoint.orgId')]" doc:name="orgID" doc:id="c93e3efd-9a72-4abf-ab14-79829d4b49b0" variableName="orgID"/>
+		<set-variable value="#[p('anypoint.tier')]" doc:name="SLA_Tier" doc:id="f16c6a59-bf5a-4873-abe3-1a457eb852e6" variableName="tier"/>
+		<set-variable value="#[p('anypoint.envId')]" doc:name="envID" doc:id="bfb3c363-da17-4f2e-90b9-9f9911a74cda" variableName="envID"/>
+		<set-variable value="#[p('anypoint.apis')]" doc:name="apis" doc:id="df2cd221-8da7-4ac5-82fd-27b392a1f87b" variableName="apis"/>
+	</sub-flow>
+	<flow name="CreateClinetApplication" doc:id="7871c2e1-90b4-4708-a063-04cb15c71421" >
+		<http:listener doc:name="Listener" doc:id="1380410e-a9c7-433b-a63a-73760ec3bf32" config-ref="HTTP_Listener_config" path="/create"/>
+		<flow-ref doc:name="Get Token" doc:id="99026c54-b3fa-476f-88c7-b22e8c04c17e" name="Common"/>
+		<http:request method="POST" doc:name="Create Client Application" doc:id="15b89090-f650-4fd3-a50f-99c4aca6ab9f" path='#["/" ++ vars.orgID ++ "/" ++ "applications"]' config-ref="CreateClientApplicationRequest">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	Authorization : "Bearer " ++ vars.token
+}]]]></http:headers>
+		</http:request>
+		<logger level="INFO" doc:name="Client Application Detail" doc:id="250c9b39-a5a9-4b71-9c26-e5b37cad8037" message="#[payload]"/>
+		<set-variable value="#[payload.id]" doc:name="GetApplicationID" doc:id="b248a917-b97b-4eba-99d5-4e08bb838f6e" variableName="applicationID"/>
+		<logger level="INFO" doc:name="applicationId" doc:id="a774d805-8270-4801-8f1f-4e3c0407fb8b" message="#[payload.id]"/>
+		<http:request method="POST" doc:name="CreateContract" doc:id="40a3f5c7-867b-46f9-8e03-7df2c70f5ac3" config-ref="CreateContractRequest" path='#["/" ++ vars.orgID ++ "/environments/" ++ vars.envID ++ "/apis/" ++ vars.apis ++ "/contracts"]'>
+			<http:body><![CDATA[#[%dw 2.0
+output application/json
+---
+{
+    "applicationId": payload.id,
+    "requestedTierId": 1684292
+}]]]></http:body>
+			<http:headers><![CDATA[#[output application/java
+---
+{
+	Authorization : "Bearer " ++ vars.token
+}]]]></http:headers>
+		</http:request>
+		<foreach doc:name="For Each" doc:id="d5db0e67-36b2-4bc0-a1b7-4c34220ea9ec" >
+			<ee:transform doc:name="Transform Message" doc:id="e91cee2b-3f6b-447f-9453-cf45d32c23f5">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+//payload 
+
+[{
+	"id":"nebilnu@gmail.com"
+}, 
+{
+	"id":"nebihaamirfeb2@gmail.com"
+}
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+			<logger level="INFO" doc:name="Logger" doc:id="09188fe6-a08e-4e0b-a222-432bd07a5c20" message="#[payload]"/>
+		</foreach>
+		<http:request method="POST" doc:name="AssignContractToUser" doc:id="25f0c65d-4543-4e8c-94ff-57a6ebfded54" config-ref="CreateClientApplicationRequest" path='#[vars.orgId ++ "/applications/" ++ vars.applicationID ++ "/owners"]'>
+			<http:body><![CDATA[#[%dw 2.0
+output application/json
+
+//var users = ["01ae3692-fc1f-4270-ae50-97cf006509ad", "af870b3a-b3b4-4447-a143-f739532c155d"]
+---
+
+{
+
+"id": "01ae3692-fc1f-4270-ae50-97cf006509ad"
+}]]]></http:body>
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	Authorization : "Bearer " ++ vars.token
+}]]]></http:headers>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="8e3852c7-201b-42bc-a300-ad3e1b947540" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": "Done"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

@@ -1,0 +1,11 @@
+anypoint:
+  host: "anypoint.mulesoft.com"
+  apiplatform: "/apiplatform/repository/v2/organizations/"
+  orgId: "a0f69e53-ff04-4945-89b2-a3c9c3787775"
+  tier: "1684292"
+
+  apimanager: "/apimanager/api/v1/organizations/"
+  envId: "2c5ec9ef-4135-47ec-b4a4-2b9bbea8737b"
+  apis: "18893791"
+  
+  
