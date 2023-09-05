@@ -1,0 +1,419 @@
+{
+	"info": {
+		"_postman_id": "2f4b69f1-a60d-494f-b8e5-6a40c78a4e03",
+		"name": "Anypoint Contrats",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET SLA Tier",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://anypoint.mulesoft.com/apimanager/api/v1/organizations/a0f69e53-ff04-4945-89b2-a3c9c3787775/environments/2c5ec9ef-4135-47ec-b4a4-2b9bbea8737b/apis/18893791/tiers",
+					"protocol": "https",
+					"host": [
+						"anypoint",
+						"mulesoft",
+						"com"
+					],
+					"path": [
+						"apimanager",
+						"api",
+						"v1",
+						"organizations",
+						"a0f69e53-ff04-4945-89b2-a3c9c3787775",
+						"environments",
+						"2c5ec9ef-4135-47ec-b4a4-2b9bbea8737b",
+						"apis",
+						"18893791",
+						"tiers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Creating Client Application",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "client_authentication",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "useBrowser",
+							"value": true,
+							"type": "boolean"
+						},
+						{
+							"key": "scope",
+							"value": "full",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "deF7301ab2E1407Ea78E7B7eE6A85904",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "10bad438874943fe8ee9405df45a826f",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "https://anypoint.mulesoft.com/accounts/api/v2/oauth2/token",
+							"type": "string"
+						},
+						{
+							"key": "authUrl",
+							"value": "https://anypoint.mulesoft.com/accounts/api/v2/oauth2/authorize",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "connectedapp_token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer 5e876a7e-d670-43f9-b2ae-d6d66ea90ed4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n     \"redirectUri\": [\"http://localhost/\"], \n     \"apiEndpoints\": false, \n     \"name\": \"uh\", \n     \"description\": \"Create this App for test45 via API\", \n     \"url\": \"https://www.example.com/app-test\"\n    \n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://anypoint.mulesoft.com/apiplatform/repository/v2/organizations/a0f69e53-ff04-4945-89b2-a3c9c3787775/applications?18893791",
+					"protocol": "https",
+					"host": [
+						"anypoint",
+						"mulesoft",
+						"com"
+					],
+					"path": [
+						"apiplatform",
+						"repository",
+						"v2",
+						"organizations",
+						"a0f69e53-ff04-4945-89b2-a3c9c3787775",
+						"applications"
+					],
+					"query": [
+						{
+							"key": "18893791",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create SLA Tier ",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer 5e876a7e-d670-43f9-b2ae-d6d66ea90ed4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"autoApprove\": true,\n  \"description\": \"SLA Tier Description\",\n  \"limits\": [\n      {\n          \"maximumRequests\": 2,\n          \"timePeriodInMilliseconds\": 90000,\n          \"visible\": true\n      }\n  ],\n  \"name\": \"Regular\",\n  \"status\": \"ACTIVE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://anypoint.mulesoft.com/apimanager/api/v1/organizations/a0f69e53-ff04-4945-89b2-a3c9c3787775/environments/2c5ec9ef-4135-47ec-b4a4-2b9bbea8737b/apis/18893791/tiers",
+					"protocol": "https",
+					"host": [
+						"anypoint",
+						"mulesoft",
+						"com"
+					],
+					"path": [
+						"apimanager",
+						"api",
+						"v1",
+						"organizations",
+						"a0f69e53-ff04-4945-89b2-a3c9c3787775",
+						"environments",
+						"2c5ec9ef-4135-47ec-b4a4-2b9bbea8737b",
+						"apis",
+						"18893791",
+						"tiers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Client Application",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://anypoint.mulesoft.com/apiplatform/repository/v2/organizations/a0f69e53-ff04-4945-89b2-a3c9c3787775/applications",
+					"protocol": "https",
+					"host": [
+						"anypoint",
+						"mulesoft",
+						"com"
+					],
+					"path": [
+						"apiplatform",
+						"repository",
+						"v2",
+						"organizations",
+						"a0f69e53-ff04-4945-89b2-a3c9c3787775",
+						"applications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Contract",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"applicationId\": 1908257,\n    \"requestedTierId\": 1684292\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://anypoint.mulesoft.com/apimanager/api/v1/organizations/a0f69e53-ff04-4945-89b2-a3c9c3787775/environments/2c5ec9ef-4135-47ec-b4a4-2b9bbea8737b/apis/18893791/contracts",
+					"protocol": "https",
+					"host": [
+						"anypoint",
+						"mulesoft",
+						"com"
+					],
+					"path": [
+						"apimanager",
+						"api",
+						"v1",
+						"organizations",
+						"a0f69e53-ff04-4945-89b2-a3c9c3787775",
+						"environments",
+						"2c5ec9ef-4135-47ec-b4a4-2b9bbea8737b",
+						"apis",
+						"18893791",
+						"contracts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Contract",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://anypoint.mulesoft.com/apimanager/api/v1/organizations/a0f69e53-ff04-4945-89b2-a3c9c3787775/environments/2c5ec9ef-4135-47ec-b4a4-2b9bbea8737b/apis/18893791/contracts",
+					"protocol": "https",
+					"host": [
+						"anypoint",
+						"mulesoft",
+						"com"
+					],
+					"path": [
+						"apimanager",
+						"api",
+						"v1",
+						"organizations",
+						"a0f69e53-ff04-4945-89b2-a3c9c3787775",
+						"environments",
+						"2c5ec9ef-4135-47ec-b4a4-2b9bbea8737b",
+						"apis",
+						"18893791",
+						"contracts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET API ID (AutoDiscovery)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://anypoint.mulesoft.com/apimanager/api/v1/organizations/a0f69e53-ff04-4945-89b2-a3c9c3787775/environments/2c5ec9ef-4135-47ec-b4a4-2b9bbea8737b/apis",
+					"protocol": "https",
+					"host": [
+						"anypoint",
+						"mulesoft",
+						"com"
+					],
+					"path": [
+						"apimanager",
+						"api",
+						"v1",
+						"organizations",
+						"a0f69e53-ff04-4945-89b2-a3c9c3787775",
+						"environments",
+						"2c5ec9ef-4135-47ec-b4a4-2b9bbea8737b",
+						"apis"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET User ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://anypoint.mulesoft.com/apimanager/xapi/v1/organizations/a0f69e53-ff04-4945-89b2-a3c9c3787775/users?includeCurrent=true",
+					"protocol": "https",
+					"host": [
+						"anypoint",
+						"mulesoft",
+						"com"
+					],
+					"path": [
+						"apimanager",
+						"xapi",
+						"v1",
+						"organizations",
+						"a0f69e53-ff04-4945-89b2-a3c9c3787775",
+						"users"
+					],
+					"query": [
+						{
+							"key": "includeCurrent",
+							"value": "true"
+						},
+						{
+							"key": "search",
+							"value": "y",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Assign Contract Owner",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n\"id\": \"e61a6742-5dd5-42dd-bc9d-fdf28ce96c9c\"\n}\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://anypoint.mulesoft.com/apiplatform/repository/v2/organizations/a0f69e53-ff04-4945-89b2-a3c9c3787775/applications/1908257/owners",
+					"protocol": "https",
+					"host": [
+						"anypoint",
+						"mulesoft",
+						"com"
+					],
+					"path": [
+						"apiplatform",
+						"repository",
+						"v2",
+						"organizations",
+						"a0f69e53-ff04-4945-89b2-a3c9c3787775",
+						"applications",
+						"1908257",
+						"owners"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
